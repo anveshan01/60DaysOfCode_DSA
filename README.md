@@ -1,5 +1,5 @@
 # 60DaysOfCode_DSA
-
+Every participant must create a branch with their name (For example : parth26 is parth from batch of 2026). 
 Note : This is not a compulsory challenge, it's totally optional for all the mentees .
 For 60 days, we are supposed to solve programming questions on either GFG or Leetcode and then you have to submit your codes in a github repository where you will be added as collaborator. There are no exceptions for Practicals , college assignments or anything .
 Please read the points below if you are opting for it.
