@@ -1,0 +1,22 @@
+class Solution {
+    public int numberOfSubstrings(String s) {
+
+        int len = s.length();
+        int left = 0, right = 0, ans = 0;
+        //boolean charA = false, charB = false, charC = false;
+        int[] chars = new int[3];
+
+        while(right<len){
+            char curr = s.charAt(right);
+            chars[curr-'a']++;
+            while(chars[0]>0 && chars[1]>0 && chars[2]>0){
+                ans += (len-right);
+                char removeChar = s.charAt(left);
+                chars[removeChar-'a']--;
+                left++;
+            }
+            right++;
+        }
+        return ans;
+    }
+}
