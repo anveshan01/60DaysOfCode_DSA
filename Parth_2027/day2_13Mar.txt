@@ -1,0 +1,49 @@
+//25.Reverse nodes in k-group-hard
+class Solution {
+    public ListNode kthNode(ListNode head, int k) {//to find kth node
+        ListNode temp = head;
+        while (temp != null && k > 1) {
+            temp = temp.next;
+            k--;
+        }
+        return temp;
+    }
+    public ListNode reverse(ListNode head) {//to reverse k-grpup of nodes/ll
+        ListNode prev = null, curr = head, next = null;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+    public ListNode reverseKGroup(ListNode head, int k) {//main funcn
+        if (head == null || k == 1) return head;
+        ListNode temp = head;
+        ListNode prevNode = null;
+        ListNode newHead = null;
+        while (temp != null) {
+            ListNode kthNode = kthNode(temp, k);//get kth node
+            if (kthNode == null) {
+                if (prevNode != null) prevNode.next = temp;//not enough elements to get to kth
+                break;
+            }
+            ListNode nextGroup = kthNode.next;//next group of k elements
+            kthNode.next = null;//seperating k elements from ll
+            ListNode reversedHead = reverse(temp);//reversing k elements
+            if (newHead == null) newHead = reversedHead;
+            if (prevNode != null) {
+                prevNode.next = reversedHead;
+            }
+            prevNode = temp;
+            temp.next = nextGroup;
+            temp = nextGroup;
+        }
+        if(newHead!=null){
+            return newHead;
+        }else return head;
+
+
+    }
+}
