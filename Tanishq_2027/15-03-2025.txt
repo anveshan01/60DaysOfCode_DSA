@@ -1,0 +1,53 @@
+class Spreadsheet {
+    int[][] sheet;
+    public Spreadsheet(int rows) {
+        sheet = new int[rows+1][26];
+    }
+    
+    public void setCell(String cell, int value) {
+        int col = cell.charAt(0) - 'A';
+        int row = Integer.valueOf(cell.substring(1));
+        sheet[row][col] = value;
+        
+    }
+    
+    public void resetCell(String cell) {
+        int col = cell.charAt(0) - 'A';
+        int row = Integer.valueOf(cell.substring(1));
+        sheet[row][col] = 0;
+    }
+    
+    public int getValue(String formula) {
+        String[] formulaParts = formula.split("[+]");
+        String fir = formulaParts[0].substring(1,formulaParts[0].length());
+        String sec = formulaParts[1];
+        int firInt = 0, secInt = 0;
+        if(fir.charAt(0) - 'A' > 25 || fir.charAt(0) - 'A' < 0){
+            //number
+            firInt = Integer.valueOf(fir);
+        }else{
+            //cell address
+            int col = fir.charAt(0) - 'A';
+            int row = Integer.valueOf(fir.substring(1));
+            firInt = sheet[row][col];
+        }
+        if(sec.charAt(0) - 'A' > 25 || sec.charAt(0) - 'A' < 0){
+            //number
+            secInt = Integer.valueOf(sec);
+        }else{
+            //cell address
+            int col = sec.charAt(0) - 'A';
+            int row = Integer.valueOf(sec.substring(1));
+            secInt = sheet[row][col];
+        }
+        return firInt + secInt;
+    }
+}
+
+/**
+ * Your Spreadsheet object will be instantiated and called as such:
+ * Spreadsheet obj = new Spreadsheet(rows);
+ * obj.setCell(cell,value);
+ * obj.resetCell(cell);
+ * int param_3 = obj.getValue(formula);
+ */©leetcode
