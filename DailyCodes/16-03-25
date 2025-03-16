@@ -1,0 +1,131 @@
+//Maximum Candies Allocated to K Children
+class Solution {
+public:
+    bool solve(vector<int>& candies,int mid,long long k){
+        long long persons=0;
+        for(int i=0;i<candies.size();i++){
+            if(candies[i]<mid){
+                continue;
+            }
+            int s=(candies[i]/mid);
+            persons+=s;
+            if(persons>=k){
+                return true;
+            }
+        }
+        return false;
+    }
+    int maximumCandies(vector<int>& candies, long long k) {
+        if(candies.size()==1){
+            return (candies[0]/k);
+        }
+        sort(candies.begin(),candies.end());
+        int s=1;
+        long long e=candies[candies.size()-1];
+        int ans=0;
+        // if(e<candies[0]){return 0;}
+        int mid;
+        while(s<=e){
+            mid=(s+e)/2;
+            if(mid==0){return 0;}
+            bool check=solve(candies,mid,k);
+            if(check==true){
+                ans= max(mid,ans);
+                s=mid+1;
+            }
+            else{
+                e=mid-1;
+            }
+        }
+        return ans;
+    }
+};
+
+//Merge Intervals
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(),intervals.end());
+        if(intervals.size()==1){return intervals;}
+        vector<vector<int>>ans;
+        vector<int>output;
+        output.push_back(intervals[0][0]);
+        output.push_back(intervals[0][1]);
+        int i=1;
+        int a=0;
+        while(i<intervals.size()){
+            if(output.size()==0){
+                output.push_back(intervals[i][0]);
+                output.push_back(intervals[i][1]);
+                i++;
+            }else if(intervals[i][0]<=intervals[a][1]){
+                if(intervals[i][1]>intervals[a][1]){
+                output.pop_back();
+                output.push_back(intervals[i][1]);
+                a=i;
+                }
+                i++;
+            }else{
+                ans.push_back(output);
+                output.clear();
+                output.push_back(intervals[i][0]);
+                output.push_back(intervals[i][1]);
+                a=i;
+                i++;
+            }
+        }
+        if(!output.empty()){
+            ans.push_back(output);
+        }
+        return ans;
+    }
+};
+
+//Insert Greatest Common Divisor In Linked List
+class Solution {
+public:
+    int solve(int a,int b){
+        int k=min(a,b);
+        while(k>=1){
+            if(a%k==0 && b%k==0){
+                break;
+            }
+            k--;
+        }
+        return k;
+    }
+    ListNode* insertGreatestCommonDivisors(ListNode* head) {
+        if(head==NULL || head->next==NULL){return head;}
+        ListNode* temp=head;
+        ListNode* forward=temp->next;
+        while(forward!=NULL){
+            int k=solve(temp->val,forward->val);
+            ListNode* new_node=new ListNode(k);
+            new_node->next=forward;
+            temp->next=new_node;
+            temp=forward;
+            forward=forward->next;
+        }
+        return head;
+    }
+};
+
+//Minimum Length of String After Operations
+class Solution {
+public:
+    int minimumLength(string s) {
+        if(s.length()<3){return s.length();}
+        unordered_map<char,int>mp;
+        for(int i=0;i<s.length();i++){
+            mp[s[i]]++;
+            if(mp[s[i]]==3){
+                mp[s[i]]=1;
+            }
+        }
+        int ans=0;
+        for(auto i:mp){
+            ans+=i.second;
+        }
+        return ans;
+    }
+};
