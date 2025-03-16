@@ -1,0 +1,30 @@
+class Solution {
+    public int search(int[] piles, int low, int high, int h, int len){
+        while(low<high){
+            int rate = low+(high-low)/2;
+            int time = totalTime(piles, rate, len);
+            if(time <= h){
+                high = rate;
+            }else{
+                low = rate+1;
+            }
+        }
+        return low;
+    }
+    public int totalTime(int[] piles, int rate, int len){
+        //int len = piles.length;
+        int time = 0;
+        for(int i = 0; i<len; i++){
+            time += (int)Math.ceil((double)piles[i]/rate);
+            //time+=currTime;
+        }
+        return time;
+    }
+    public int minEatingSpeed(int[] piles, int h) {
+        Arrays.sort(piles);
+        int len = piles.length;
+        int max = piles[len-1];
+        
+        return search(piles, 1, max, h, len);
+    }
+}
