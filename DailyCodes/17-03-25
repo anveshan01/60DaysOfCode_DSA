@@ -1,0 +1,95 @@
+//Integer To Roman
+class Solution {
+public:
+    string intToRoman(int num) {
+        map<int,string> mp;
+        string solution = "";
+        vector<int> ans;
+        ans.push_back(1000);
+        mp[1000] = "M";
+        ans.push_back(900);
+        mp[900] = "CM";
+        ans.push_back(500);
+        mp[500] = "D";
+        ans.push_back(400);
+        mp[400] = "CD";
+        ans.push_back(100);
+        mp[100] = "C";
+        ans.push_back(90);
+        mp[90] = "XC";
+        ans.push_back(50);
+        mp[50] = "L";
+        ans.push_back(40);
+        mp[40] = "XL";
+        ans.push_back(10);
+        mp[10] = "X";
+        ans.push_back(9);
+        mp[9] = "IX";
+        ans.push_back(5);
+        mp[5] = "V";
+        ans.push_back(4);
+        mp[4] = "IV";
+        ans.push_back(1);
+        mp[1] = "I";
+        int i=0;
+        while (num > 0) {
+            if (num >= ans[i]) {
+                int j = num / ans[i];
+                num = num % ans[i];
+                while (j--) {
+                    solution = solution + mp[ans[i]];
+                }
+            }
+            i++;
+        }
+        return solution;
+    }
+};
+
+//Divide Array Into Equal Pairs
+class Solution {
+public:
+    bool divideArray(vector<int>& nums) {
+        unordered_map<int,int>mp;
+        for(int i=0;i<nums.size();i++){
+            mp[nums[i]]++;
+        }
+        for(auto i:mp){
+            if(i.second%2!=0){
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+//Equal Row and Column Pairs
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        int count=0;
+        unordered_map<string,int>mp;
+        int n=grid.size();
+        for(int i=0;i<n;i++){
+           string ans="";
+            for(int j=0;j<n;j++){
+                string s=to_string(grid[i][j]);
+                ans=ans+s;
+                ans.push_back('_');
+            }
+            mp[ans]++;
+        }
+        for(int i=0;i<n;i++){
+            string ans="";
+            for(int j=0;j<n;j++){
+               string s=to_string(grid[j][i]);
+               ans=ans+s;
+               ans.push_back('_');
+            }
+            if(mp.find(ans)!=mp.end()){
+                count+=mp[ans];
+            }
+        }
+        return count;
+    }
+};
