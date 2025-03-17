@@ -1,0 +1,21 @@
+//1922. Count Good Numbers**
+
+class Solution {
+    public long MOD=1_000_000_007;
+    public int countGoodNumbers(long n) {
+        long odd=n/2; //count no of odd places
+        long even=(n+1)/2; //count no of even places
+        //multiply the results of pow(5,even) and pow(4,odd) then take the result modulo MOD
+        return (int)((pow(5,even)*pow(4,odd))%MOD);
+        
+    }
+    public long pow(long x,long n){
+        if(n==0) return 1;
+        long temp=pow(x,n/2);
+        if(n%2==0){
+            return (temp*temp)%MOD;//if power even square
+        }else{
+            return (x*temp*temp)%MOD;//if power odd mul by sq
+        }
+    }
+}
