@@ -1,0 +1,139 @@
+//Number of Pairs of Interchangeable Rectangles
+class Solution {
+public:
+    long long interchangeableRectangles(vector<vector<int>>& rectangles) {
+        long long ans=0;
+        vector<double>space;
+        for(int i=0;i<rectangles.size();i++){
+            double c=(double(rectangles[i][0]))/(double(rectangles[i][1]));
+            space.push_back(c);
+        }
+        unordered_map<double,int>mp;
+        for(int i=space.size()-1;i>=0;i--){
+            if(mp.find(space[i])!=mp.end()){
+                ans+=mp[space[i]];
+            }
+            mp[space[i]]++;
+        }
+        return ans;
+    }
+};
+
+//Maximum Swap
+class Solution {
+public:
+    int maximumSwap(int num) {
+        // vector<int> ans;
+        // while (num != 0) {
+        //     int digit = num % 10;
+        //     ans.push_back(digit);
+        //     num = num / 10;
+        // }
+        // int s = 0;
+        // int e = ans.size() - 1;
+        // while (s <= e) {
+        //     swap(ans[s], ans[e]);
+        //     s++;
+        //     e--;
+        // }
+        // int max;
+        // for (int i = 1; i < ans.size(); i++) {
+        //     if (ans[i] > ans[i - 1]) {
+        //         max = i;
+        //     } else {
+        //         max = i - 1;
+        //     }
+        // }
+        // swap(ans[max], ans[0]);
+        // int k = 0;
+        // for (int i = 0; i < ans.size(); i++) {
+        //     k = (k * 10) + ans[i];
+        // } 
+        if(num<=11){return num;}      
+        unordered_map<int,int>mp;
+        priority_queue<int>pq;
+        string str=to_string(num);
+        for(int i=0;i<str.length();i++){
+            int j=str[i]-'0';
+            pq.push(j);
+            mp[j]=i;
+        }
+        int i=0;
+        while( !pq.empty()){
+            if(pq.top()>(str[i]-'0')){
+                break;
+            }
+            i++;
+            pq.pop();
+        }
+        if(pq.empty()){
+            return num;
+        }
+        int j=mp[pq.top()];
+        swap(str[i],str[j]);
+        int ans=stoi(str);
+        return ans;
+    }
+};
+
+//Online Stock Span
+class StockSpanner {
+public:
+    stack<pair<int,int>>st;
+    // vector<int>ans;
+    int i;
+    StockSpanner() {
+        // ans.clear();
+        while(!st.empty()){
+            st.pop();
+        }
+        i=0;
+    }
+    
+    int next(int price) {
+        i++;
+        while(!st.empty()){
+        pair<int,int>k;
+        k=st.top();
+        if(k.first>price){
+            break;
+        }
+        st.pop();
+        }
+        pair<int,int>f;
+        if(st.empty()){
+            f=make_pair(price,i);
+            st.push(f);
+            return i;
+        }
+        int j=st.top().second;
+        f=make_pair(price,i);
+        st.push(f);
+        return (i-j);
+    }
+};
+
+//Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
+class Solution {
+public:
+    int numOfSubarrays(vector<int>& arr, int k, int threshold) {
+        int i = 0, j = 0;
+        int count = 0;
+        int ans=0;
+        while (j < k) {
+            count += arr[j];
+            j++;
+        }
+        int a=floor(count/k);
+        if(a>=threshold){ans++;}
+        while (j < arr.size()) {
+            count += arr[j];
+            count -= arr[i];
+            int s=floor(count/k);
+            if(s>=threshold){ans++;}
+            i++;
+            j++;
+        }
+        return ans;
+    }
+};
