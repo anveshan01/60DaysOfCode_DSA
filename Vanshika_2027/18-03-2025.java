@@ -25,3 +25,21 @@ class Solution {
         return head;
     }
 }
+
+//https://leetcode.com/problems/longest-nice-subarray
+class Solution {
+    public int longestNiceSubarray(int[] nums) {
+        int max =0;
+        int l =0;
+        int bmask =0;
+        for(int r =0; r<nums.length;r++){
+            while((bmask & nums[r]) != 0){
+                bmask ^= nums[l];
+                l++;
+            }
+            bmask |= nums[r];
+            max = Math.max(max, r-l+1);
+        }
+        return max;
+    }
+}
