@@ -1,0 +1,46 @@
+//Minimum Operations to Make Binary Array Elements Equal to One I
+class Solution {
+public:
+    
+    int minOperations(vector<int>& nums) {
+        int ans=0;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]==0  &&  (i+2<nums.size())){
+                for(int j=i+1;j<i+3;j++){
+                    if(nums[j]==0){
+                        nums[j]=1;
+                    }else{
+                        nums[j]=0;
+                    }
+                }
+                ans++;
+            }
+            else if(nums[i]==0  && ((i+2)>=nums.size() || (i+1)>=nums.size())){
+                return -1;
+            }
+        }
+        return ans;
+    }
+};
+
+//Maximum Unique Subarray Sum After Deletion
+class Solution {
+public:
+    int maxSum(vector<int>& nums) {
+        int ans=nums[0];
+        map<int,int>mp;
+        mp[nums[0]]++;
+        for(int i=1;i<nums.size();i++){
+            if(ans<0){
+                ans=max(ans,nums[i]);
+                mp[nums[i]]++;
+            }else{
+                if(mp.find(nums[i])==mp.end()  && nums[i]>0){
+                    ans+=nums[i];
+                    mp[nums[i]]++;
+                }
+            }
+        }
+        return ans;
+    }
+};
