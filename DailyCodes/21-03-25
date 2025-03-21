@@ -1,0 +1,72 @@
+//Number of Substrings Containing All Three Characters
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        int count=0;
+        unordered_map<char,int>mp;
+        int i=0,j=0;
+        int n=s.length()-1;
+        while(j<s.length()){
+            mp[s[j]]++;
+            if(mp.size()==3){
+                while(mp.size()==3){
+                    count++;
+                    count+=n-j;
+                    mp[s[i]]--;
+                    if(mp[s[i]]==0){
+                        mp.erase(s[i]);
+                    }
+                    i++;
+                }
+            }
+            j++;
+        }
+        return count;
+    }
+};
+
+//Vowels of All Substrings
+class Solution {
+public:
+    long long countVowels(string word) {
+        long long ans=0;
+        long long n=word.length()-1;
+        for(long long j=0;j<word.length();j++){
+            if((word[j]=='a') || (word[j]=='e') || (word[j]=='i') || (word[j]=='o') || (word[j]=='u')){
+                ans+=((j-0+1)*(n-j+1));
+            }
+        }
+        return ans;
+    }
+};
+
+//Pairs of Songs With Total Durations Divisible by 60
+class Solution {
+public:
+    int numPairsDivisibleBy60(vector<int>& time) {
+        for(int i=0;i<time.size();i++){
+            time[i]=time[i]%60;
+        }
+        unordered_map<int,int>mp;
+        for(int i=0;i<time.size();i++){
+            mp[time[i]]++;
+        }
+        int count=0;
+        for(int i=0;i<time.size();i++){
+            int rem=60-time[i];
+            if(rem==60){
+                count+=mp[0];
+                count--;
+                mp[0]--;
+            }else{
+                 if(mp.find(rem)!=mp.end()){
+                count+=mp[rem];
+                }
+                 if(rem==time[i]){count--;}
+                mp[time[i]]--;
+            }
+           
+        }
+        return count;
+    }
+};
