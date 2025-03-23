@@ -1,0 +1,18 @@
+class Solution {
+    public int count = 0;
+    public void target(int[] nums, int target, int idx, int sum){
+        if(idx == nums.length){
+            if(sum == target){
+                count += 1;
+            }
+        }else{
+            target(nums, target, idx+1, sum + nums[idx]);
+        
+            target(nums, target, idx+1, sum - nums[idx]);
+        }
+    }
+    public int findTargetSumWays(int[] nums, int target) {
+        target(nums, target, 0, 0);
+        return count;
+    }
+}
