@@ -50,5 +50,3 @@ class Solution {
         return new Info(false,min,max,0);
     }
 }
-
-//https://leetcode.com/problems/minimum-increment-operations-to-make-array-beautiful/
