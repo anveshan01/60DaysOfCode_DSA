@@ -1,0 +1,24 @@
+class Solution {
+    public void find(int[] nums, int target, int idx, int sum, List<Integer> currList, List<List<Integer>> list){
+        if(sum == target){
+            list.add(new ArrayList<>(currList));
+            return;
+        }
+        if(idx >= nums.length || sum > target){
+            return;
+        }
+        sum += nums[idx]; //add curr ele
+        currList.add(nums[idx]); 
+
+        find(nums, target, idx, sum, currList, list); // keep checking curr
+        currList.remove(currList.size()-1);
+
+        sum-=nums[idx]; //subtract last added for backtracking
+        find(nums, target, idx+1, sum, currList, list); // dont add curr ele
+    }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        find(candidates, target, 0, 0, new ArrayList<>(), list);
+        return list;
+    }
+}
