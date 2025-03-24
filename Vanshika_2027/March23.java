@@ -36,9 +36,7 @@ class Solution {
                 cost -= Math.abs(s.charAt(left) - t.charAt(left));
                 left++;
             }
-            max
-                    = Math.max(max
-                    , right -left+1);
+            max= Math.max(max, right -left+1);
             right++;
         }
         return max
