@@ -1,0 +1,34 @@
+class Solution {
+    public int trap(int[] height) {
+        int sum=0;
+        int n=height.length;
+        int []prefixMax=new int[n];
+        int []suffixMax=new int[n];
+        prefixMax[0]=height[0];
+        suffixMax[n-1]=height[n-1];
+        for(int i=1;i<n;i++){
+            if(prefixMax[i-1]>height[i]){
+                prefixMax[i]=prefixMax[i-1];
+            }else{
+                prefixMax[i]=height[i];
+            }
+        }
+        for(int i=n-2;i>=0;i--){
+            if(suffixMax[i+1]>=height[i]){
+                suffixMax[i]=suffixMax[i+1];
+
+            }else{
+                suffixMax[i]=height[i];
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            if(prefixMax[i]>height[i] && suffixMax[i]>height[i]){
+                int count=Math.min(prefixMax[i],suffixMax[i]);
+                count-=height[i];
+                sum+=count;
+            }
+        }
+        return sum;
+    }
+}
