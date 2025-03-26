@@ -1,0 +1,31 @@
+//potd
+import java.util.*;
+
+class Solution {
+    public int minOperations(int[][] grid, int x) {
+        List<Integer> list = new ArrayList<>();
+        int rows = grid.length, cols = grid[0].length;
+        // Step 1: Convert grid to 1D list
+        for (int[] row : grid) {
+            for (int num : row) {
+                list.add(num);
+            }
+        }
+        // Step 2: Check 
+        int base = list.get(0);
+        for (int num : list) {
+            if ((num - base) % x != 0) {
+                return -1;
+            }
+        }
+        // Step 3: Sort the list to find the median
+        Collections.sort(list);
+        int median = list.get(list.size() / 2);
+        // Step 4: Calculate the minimum operations
+        int operations = 0;
+        for (int num : list) {
+            operations += Math.abs(num - median) / x;
+        }
+        return operations;
+    }
+}
