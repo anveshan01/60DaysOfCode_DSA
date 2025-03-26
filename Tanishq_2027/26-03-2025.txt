@@ -1,0 +1,24 @@
+class Solution {
+    public int minOperations(int[][] grid, int x) {
+        int row = grid.length, col = grid[0].length;
+        int[] arr = new int[row*col];
+        int idx = 0;
+        for(int[] currRow : grid){
+            for(int ele : currRow){
+                arr[idx++] = ele;
+            }
+        }
+        Arrays.sort(arr);
+        int mid = arr[(arr.length-1)/2];
+        int operations = 0;
+        for(int num : arr){
+            int diff = (Math.abs(num-mid));
+            if(diff % x == 0){
+                operations += (diff/x);
+            }else{
+                return -1;
+            }
+        }
+        return operations;
+    }
+}
