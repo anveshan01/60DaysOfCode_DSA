@@ -1,0 +1,47 @@
+class Solution {
+    // public int findMax(List<Integer> list){
+    //     HashMap<Integer, Integer> map = new HashMap<>();
+    //     int size = list.size();
+    //     int max = 0, maxFreq = 0;
+    //     for(int i = 0; i<size; i++){
+    //         int curr = list.get(i);
+    //         if(map.get(curr) == null){ // new ele
+    //             map.put(curr,1);
+    //         }else{
+    //             map.put(curr,(map.get(curr)+1));
+    //         }
+    //         if(map.get(curr) > maxFreq && map.get(curr) > (size/2)){
+    //             max = curr;
+    //             maxFreq = map.get(curr);
+    //         }
+    //     }
+    //     return max;
+    // } 
+    public int minimumIndex(List<Integer> nums) {
+        int size = nums.size();
+        HashMap<Integer, Integer> left = new HashMap<>();
+        HashMap<Integer, Integer> right = new HashMap<>();
+        for(int i = 0; i<size; i++){ // populate right map
+            int curr = nums.get(i);
+            if(right.get(curr) == null){ // new ele
+                right.put(curr,1);
+            }else{
+                right.put(curr,(right.get(curr)+1));
+            }
+        }
+        for(int i = 0; i<size; i++){ // dec from right and inc in left
+            int curr = nums.get(i);
+            if(left.get(curr) == null){ // new ele
+                left.put(curr,1);
+            }else{
+                left.put(curr,(left.get(curr)+1));
+            }
+            right.put(curr,(right.get(curr)-1));
+
+            if(left.get(curr) > (i+1)/2 && right.get(curr) > (size-i-1)/2){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
