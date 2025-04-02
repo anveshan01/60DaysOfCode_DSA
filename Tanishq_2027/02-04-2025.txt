@@ -1,0 +1,50 @@
+class Solution {
+    public boolean isPal(String str){
+        int len = str.length();
+        if(len == 0 || len == 1){
+            return true;
+        }
+        int left = 0, right = len-1;
+        while(left<right){
+            if(str.charAt(left)!=str.charAt(right)){
+                return false;
+            }
+            left++; right--;
+        }
+        return true;
+    }
+    public boolean checkPalindromeFormation(String a, String b) {
+        int len = a.length();
+        if(len == 0 || len == 1){return true;}
+        //start from left of a
+        int left = 0, right = len-1;
+        while(left<right && a.charAt(left) == b.charAt(right)){
+                left++; right--;
+        }
+        if(left>=right){return true;} //when we go past midpoint -> its pal -> return true
+        if(isPal(a.substring(left,right+1)) || isPal(b.substring(left,right+1))){return true;} //check remaining str in middle is pal or not, AND return true if its pal
+
+        //start from left of b
+        left = 0; right = len-1;
+        while(left<right && b.charAt(left) == a.charAt(right)){
+                left++; right--;
+        }
+        if(left>=right){return true;}//past midpnt -> pal -> return true
+        if(isPal(a.substring(left,right+1)) || isPal(b.substring(left,right+1))){return true;} //check remaining str in mid is pal or not, AND rtrn true if yes
+        return false; //no pal combinations exist
+    }
+}
+class Solution {
+    public long maximumTripletValue(int[] nums) {
+        long max = 0;
+        int len = nums.length;
+        for(int i = 0; i<len; i++){
+            for(int j = i+1; j<len; j++){
+                for(int k = j+1; k<len; k++){
+                    max = Math.max(max, (((long)nums[i]-(long)nums[j])*(long)nums[k]));
+                }
+            }
+        }
+        return max;
+    }
+}
