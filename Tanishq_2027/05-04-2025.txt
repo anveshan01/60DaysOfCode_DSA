@@ -1,0 +1,19 @@
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        int len = nums.length;
+        int[] res = new int[len];
+        for(int i = 0; i<len; i++){
+            int curr = nums[i];
+            int j = (i+1)%len;
+            do{
+                if(nums[j]>nums[i]){
+                    res[i] = nums[j];
+                    break;
+                }
+                j = (j+1)%len;
+            }while(j!=i);
+            if(j==i){res[i] = -1;}
+        }
+        return res;
+    }
+}
