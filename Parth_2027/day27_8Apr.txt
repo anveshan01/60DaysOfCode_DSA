@@ -1,0 +1,32 @@
+class Solution {
+    public boolean lemonadeChange(int[] bills) {
+        int have5=0;
+        int have10=0;
+        int have20=0;
+        for(int i=0;i<bills.length;i++){
+            if(bills[i]==5){
+                have5+=1;
+            }else if(bills[i]==10){
+                if(have5>=1){
+                    have5-=1;
+                    have10+=1;
+                }else return false;
+            }else{
+                boolean check=false;
+                if(have10>=1 && have5>=1){
+                    have20+=1;
+                    have10-=1;
+                    have5-=1;
+                }
+                 else if(have5>=3){
+                    have20+=1;
+                    have5-=3;
+                }else{
+                    return false;
+                }
+                
+            }
+        }
+        return true;
+    }
+}
