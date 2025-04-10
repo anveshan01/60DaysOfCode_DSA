@@ -1,0 +1,26 @@
+class Solution {
+    public String removeDuplicates(String s, int k) {
+        Stack<Character> stack = new Stack<>();
+        Stack<Integer> count = new Stack<>();
+        for(char ch : s.toCharArray()){
+            if(!stack.isEmpty() && ch == stack.peek()){
+                count.push(count.peek()+1);
+            }
+            else{
+                count.push(1);
+            }
+            stack.push(ch);
+            if(count.peek() == k){
+                for(int i=0; i<k; i++){
+                    stack.pop();
+                    count.pop();
+                }
+            }
+        }
+        StringBuilder str = new StringBuilder();
+        for(char ch : stack){
+            str.append(ch);
+        }
+        return str.toString();
+    }
+}
