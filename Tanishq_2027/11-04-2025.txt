@@ -1,0 +1,110 @@
+import java.util.*;
+
+class Router {
+    List<Packet> router;
+    Set<Packet> packetSet;
+    Map<Integer, List<Integer>> destToTimeSt;
+    int maxSize;
+
+    public Router(int memoryLimit) {
+        maxSize = memoryLimit;
+        router = new LinkedList<>();  
+        packetSet = new HashSet<>();
+        destToTimeSt = new HashMap<>();
+    }
+
+    static class Packet {
+        int source;
+        int destination;
+        int timestamp;
+
+        Packet(int source, int destination, int timestamp) {
+            this.source = source;
+            this.destination = destination;
+            this.timestamp = timestamp;
+        }
+
+        @Override
+        public boolean equals(Object ob) {
+            if (this == ob) return true;
+            if (!(ob instanceof Packet)) return false;
+            Packet other = (Packet) ob;
+            return source == other.source && destination == other.destination && timestamp == other.timestamp;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(source, destination, timestamp);
+        }
+    }
+
+    public boolean addPacket(int source, int destination, int timestamp) {
+        Packet packet = new Packet(source, destination, timestamp);
+        if (packetSet.contains(packet)) return false;
+
+        if (router.size() == maxSize) {
+            Packet removed = router.remove(0);
+            packetSet.remove(removed);
+
+            List<Integer> tsList = destToTimeSt.get(removed.destination);
+            int index = Collections.binarySearch(tsList, removed.timestamp);
+            if (index >= 0) {
+                tsList.remove(index); 
+            }
+        }
+
+        router.add(packet);
+        packetSet.add(packet);
+
+        destToTimeSt.putIfAbsent(destination, new ArrayList<>());
+        List<Integer> tsList = destToTimeSt.get(destination);
+
+        int index = Collections.binarySearch(tsList, timestamp);
+        if (index < 0) index = -index - 1;
+        tsList.add(index, timestamp);
+
+        return true;
+    }
+
+    public int[] forwardPacket() {
+        if (router.isEmpty()) return new int[]{};
+
+        Packet pkt = router.remove(0);
+        packetSet.remove(pkt);
+
+        List<Integer> tsList = destToTimeSt.get(pkt.destination);
+        int index = Collections.binarySearch(tsList, pkt.timestamp);
+        if (index >= 0) tsList.remove(index);
+
+        return new int[]{pkt.source, pkt.destination, pkt.timestamp};
+    }
+
+    public int getCount(int destination, int startTime, int endTime) {
+        List<Integer> tsList = destToTimeSt.getOrDefault(destination, new ArrayList<>());
+
+        int left = lowerBound(tsList, startTime);
+        int right = upperBound(tsList, endTime);
+
+        return right - left;
+    }
+
+    private int lowerBound(List<Integer> list, int target) {
+        int low = 0, high = list.size();
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (list.get(mid) < target) low = mid + 1;
+            else high = mid;
+        }
+        return low;
+    }
+
+    private int upperBound(List<Integer> list, int target) {
+        int low = 0, high = list.size();
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (list.get(mid) <= target) low = mid + 1;
+            else high = mid;
+        }
+        return low;
+    }
+}
