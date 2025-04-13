@@ -1,0 +1,20 @@
+class Solution {
+    public long mod = 1000000007;
+    public long mul(long x, long y){
+        long ans = 1;
+        long curr = x;
+        while(y>0){
+            if(y%2==1){
+                ans = (ans*curr)%mod;
+            }
+            curr = (curr*curr)%mod;
+            y /= 2;
+        }
+        return ans;
+    }
+    public int countGoodNumbers(long n) {
+        long even = mul(5, (n+1)/2);
+        long odd = mul(4, (n/2));
+        return (int)(even*odd % mod);
+    }
+}
