@@ -1,0 +1,21 @@
+.txtclass Solution {
+    public long countFairPairs(int[] nums, int lower, int upper) {
+        Arrays.sort(nums);
+        long pairsUpper=find(nums,upper);
+        long pairsLowerM=find(nums,lower-1);
+        return pairsUpper-pairsLowerM;
+    }
+    private long find(int[]nums,int target){
+        int i=0;
+        int j=nums.length-1;
+        long pairs=0;
+        while(j!=0){
+            while(i<j && nums[i]+nums[j]<=target){
+                i++;
+            }
+            pairs+=Math.min(i,j);
+            j--;
+        }
+        return pairs;
+    }
+}
