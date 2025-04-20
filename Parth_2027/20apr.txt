@@ -1,0 +1,22 @@
+class Solution {
+    public int numRabbits(int[] answers) {
+        int n = answers.length;
+        int ans=0;
+        Map<Integer, Integer> hash = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            hash.put(answers[i], hash.getOrDefault(answers[i], 0) + 1);
+        }
+        for (Map.Entry<Integer, Integer> entry : hash.entrySet()) {
+            if(entry.getKey()==0){
+                ans+=entry.getValue();
+                continue;
+            }
+            int gfactor=entry.getKey()+1;
+            int set=(int)Math.ceil((double)entry.getValue()/gfactor);
+            ans+=(set*gfactor);
+
+        }
+        return ans;
+
+    }
+}
