@@ -1,0 +1,48 @@
+import java.util.*;
+class Solution {
+    public int[] occurrencesOfElement(int[] nums, int[] queries, int x) {
+        Hashtable<Integer, Integer> occr = new Hashtable<>();
+        int count = 1, len = nums.length, idx = 0;
+
+        for(int i = 0; i<len; i++){
+            if(nums[i] == x){
+                occr.put(count++, i);
+            }
+        }
+
+        len = queries.length;
+        int[] res = new int[len];
+        
+        for(int i = 0; i<len; i++){
+            if(occr.get(queries[i])!=null){
+                res[idx++] = occr.get(queries[i]);
+            }else{
+                res[idx++] = -1;
+            }
+        }
+        return res;
+    }
+}
+
+class Solution {
+    public int[] occurrencesOfElement(int[] nums, int[] queries, int x) {
+        List<Integer> list = new ArrayList<>();
+        int len = nums.length, count = 0;
+        for(int i = 0; i<len; i++){
+            if(nums[i] == x){
+                list.add(i);
+                count++;
+            }
+        }
+        len = queries.length;
+        int[] res = new int[len];
+        for(int i = 0; i<len; i++){
+            if(queries[i]<=count){
+                res[i] = list.get(queries[i]-1);
+            }else{
+                res[i] = -1;
+            }
+        }
+        return res;
+    }
+}
