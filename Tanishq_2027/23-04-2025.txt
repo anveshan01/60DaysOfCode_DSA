@@ -1,0 +1,30 @@
+import java.util.*;
+class Solution {
+    public int digSum(int n){
+        int sum = 0;
+        while(n>0){
+            sum += n%10;
+            n /= 10;
+        }
+        return sum;
+    }
+    public int countLargestGroup(int n) {
+        int max = 0;
+        Hashtable<Integer, Integer> h = new Hashtable<>();
+        for(int i = 1; i<=n; i++){
+            int sum = digSum(i);
+            if(!h.containsKey(sum)){
+                h.put(sum, 1);
+            }else{
+                int val = h.get(sum);
+                h.put(sum, val+1);
+            }
+            max = Math.max(max, h.get(sum));
+        }
+        int ans = 0;
+        for(int i : h.values()){
+            if(i == max){ans++;}
+        }
+        return ans;
+    }
+}
