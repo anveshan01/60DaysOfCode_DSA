@@ -1,0 +1,41 @@
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int max = 0, len = s.length(); 
+        HashSet<Character> set = new HashSet<>();
+        int left = 0;
+        int right;
+        for(right = 0; right<len; right++){
+            char curr = s.charAt(right);
+            while(set.contains(curr)){
+                set.remove(s.charAt(left)); left++;
+            }
+            set.add(curr);
+            int currLen = right-left+1;
+            max = Math.max(max, currLen);
+        }
+        return max;
+    }
+}
+
+class Solution {
+    public int countSubArr(int[] nums, int goal){
+        if(goal < 0){
+            return 0;
+        }
+        int len = nums.length, count = 0, sum = 0;
+        int left = 0, right = 0;
+        while(right<len){
+            sum += nums[right];
+            while(sum>goal){
+                sum -= nums[left];
+                left++;
+            }
+            count += (right-left+1);
+            right++;
+        }
+        return count;
+    }
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return countSubArr(nums, goal) - countSubArr(nums, goal-1);
+    }
+}
