@@ -1,0 +1,40 @@
+class Solution {
+    public int findRow(int[][] matrix, int low, int high, int ele){
+        while(low<=high){
+            int mid = low + (high-low)/2;
+            if(matrix[mid][0] == ele){
+                return mid;
+            }
+            else if(matrix[mid][0] < ele){
+                low = mid+1;
+            }
+            else{
+                high = mid-1;
+            }
+        }
+        return high;
+    }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        int foundRow = findRow(matrix, 0, row-1, target);
+        if(foundRow<0 || foundRow>=row){return false;}
+
+        int high = col-1, low = 0;
+        while(low<=high){
+            int mid = low + (high-low)/2;
+            if(matrix[foundRow][mid] == target){
+                return true;
+            }
+            else if(matrix[foundRow][mid] < target){
+                low = mid+1;
+            }
+            else{
+                high = mid-1;
+            }
+        }
+        return false;
+    }
+}
