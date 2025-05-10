@@ -1,0 +1,59 @@
+class Solution {
+    public String simplifyPath(String path) {
+        if(path.length() == 1){return path;}
+
+        Stack<String> s = new Stack<>();
+        s.push(Character.toString(path.charAt(0)));
+
+        int len = path.length(), idx = 1;
+        StringBuilder str;
+
+        while(idx<len){
+            if(s.isEmpty()){
+                s.push("/");
+            }
+            str = new StringBuilder();
+            String top = s.peek();
+            if(top.equals("/") && path.charAt(idx) == '/'){
+                idx++;
+                continue;
+            }
+
+            while(idx<len && path.charAt(idx) != '/'){
+                str.append(path.charAt(idx));
+                idx++;
+            }
+            if(str.toString().equals(".")){
+                idx++;
+                continue;
+            }
+            if(str.toString().equals("..")){
+                s.pop();
+            }else{
+                if(!str.isEmpty()) {
+                    s.push(str.reverse().toString());
+                }
+            }
+            idx++;
+        }
+        //printStack(s);
+        StringBuilder res = new StringBuilder();
+        while(!s.isEmpty()){
+            if(!s.peek().isEmpty() && s.peek().charAt(0) != '/'){
+                res.append("/");
+            }
+            res.append(s.pop());
+        }
+        String ans = res.reverse().toString();
+        if(ans.isEmpty()){
+            return "/";
+        }
+        if(ans.charAt(ans.length()-1) == '/'){
+            ans = ans.substring(0,ans.length()-1);
+        }
+        if(ans.isEmpty()){
+            return "/";
+        }
+        return ans;
+    }
+}
