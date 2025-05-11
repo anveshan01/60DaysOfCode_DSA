@@ -1,0 +1,23 @@
+class Solution {
+    public boolean threeConsecutiveOdds(int[] arr) {
+        if(arr.length<3)return false;
+        int i=0;
+        while(i+2<=arr.length-1){
+        int a=arr[i];
+        int b=arr[i+1];
+        int c=arr[i+2];
+        if(checkPair(a,b,c))return true;
+        i++;
+        }
+        return false;
+        
+    }
+    private boolean checkPair(int a,int b,int c){
+        if(odd(a)&&odd(b)&&odd(c))return true;
+        return false;
+    }
+    private boolean odd(int i){
+        if(i%2!=0)return true;
+        return false;
+    }
+}
