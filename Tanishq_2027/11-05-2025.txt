@@ -1,0 +1,20 @@
+class Solution {
+    public boolean isOdd(int num){
+        return num%2!=0;
+    }
+    public boolean threeConsecutiveOdds(int[] arr) {
+        int odd = 0;
+        for(int i : arr){
+            if(isOdd(i)){
+                odd++;
+            }
+            else{
+                odd = 0;
+            }
+            if(odd==3){
+                return true;
+            }
+        }
+        return false;
+    }
+}
