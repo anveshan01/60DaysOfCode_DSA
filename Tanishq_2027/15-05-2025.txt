@@ -1,0 +1,20 @@
+class Solution {
+    public boolean isValid(int n){
+        int num = n;
+        while(n>0){
+            int curr = n%10;
+            if(curr == 0 || num%curr!=0){return false;}
+            n /= 10;
+        }
+        return true;
+    }
+    public List<Integer> selfDividingNumbers(int left, int right) {
+        List<Integer> list = new ArrayList<>();
+        for(int i = left; i<=right; i++){
+            if(isValid(i)){
+                list.add(i);
+            }
+        }
+        return list;
+    }
+}
