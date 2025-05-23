@@ -1,33 +1,52 @@
-// LeetCode 
+// LeetCode Contest
 class Solution {
 public:
-    vector<int> asteroidCollision(vector<int>& asteroids) {
-        stack<int> st;
-        for(int a : asteroids){
-            if(a > 0){
-                st.push(a);
-            }
-            else{
-                while(!st.empty() && st.top() > 0 && st.top() < -a){
-                    st.pop();
-                }
-                if(st.empty() || st.top() < 0){
-                    st.push(a);
-                }
-                if(!st.empty() && st.top() == -a){
-                    st.pop();
-                }
-            }
-        }
-        vector<int> res(st.size());
-        int n = st.size() - 1;
+    int minSwaps(vector<int>& nums) {
+        int n = nums.size();
+        vector<tuple<int, int, int>> arr;
 
-        while(!st.empty()){
-            res[n--] = st.top();
-            st.pop();
+        for (int i = 0; i < n; i++) {
+            int num = nums[i];
+            int s = 0;
+            while (num > 0) {
+                s += num % 10;
+                num /= 10;
+            }
+            arr.emplace_back(s, nums[i], i);
         }
-        return res;
+        sort(arr.begin(), arr.end(), [](const auto& a, const auto& b) {
+            if (get<0>(a) == get<0>(b))
+                return get<1>(a) < get<1>(b);
+            return get<0>(a) < get<0>(b);
+        });
+
+        vector<int> to_pos(n);
+        for (int i = 0; i < n; i++) {
+            int orig_index = get<2>(arr[i]);
+            to_pos[orig_index] = i;
+        }
+
+        vector<bool> visited(n, false);
+        int swaps = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (visited[i]) continue;
+
+            int cycle_len = 0;
+            int j = i;
+            while (!visited[j]) {
+                visited[j] = true;
+                j = to_pos[j];
+                cycle_len++;
+            }
+
+            if (cycle_len > 1) {
+                swaps += cycle_len - 1;
+            }
+        }
+
+        return swaps;
     }
 };
-// T.C : O(n)
-// S.C : O(n)
+//T.C: O(NlogN)
+//S.C: O(N)
