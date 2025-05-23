@@ -1,0 +1,27 @@
+class Solution {
+    public boolean isValidSerialization(String preorder) {
+        String[] arr = preorder.split(",");
+        Stack<String> s = new Stack<>();
+        for(String i : arr){
+            s.push(i);    
+            
+            while(
+                s.size()>=3 &&
+                s.get(s.size()-1).equals("#") &&
+                s.get(s.size()-2).equals("#") &&
+                !s.get(s.size()-3).equals("#")
+            ) {
+                s.pop(); s.pop(); s.pop();
+                s.push("#");
+            }
+        }
+        // while(!s.isEmpty()){
+        //     System.out.println(s.pop());
+        // }
+        // System.out.println("size " + s.size());
+        if(s.size() == 1 && s.peek().equals("#")){
+            return true;
+        }
+        return false;
+    }
+}
