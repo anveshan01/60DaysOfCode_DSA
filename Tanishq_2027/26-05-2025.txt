@@ -1,0 +1,39 @@
+import java.util.*;
+class Solution {
+    public String getHint(String secret, String guess) {
+        int bulls = 0, cows = 0;
+        Hashtable<Character,Integer> ht = new Hashtable<>();
+        int len = secret.length();
+        
+        for(int i = 0; i<len; i++) {
+            char curr = guess.charAt(i);
+            if(!ht.containsKey(curr)) {
+                ht.put(curr,0);
+            }
+            ht.put(curr,ht.get(curr)+1);
+        }
+
+        for(int i = 0; i<len; i++) {
+            char curr = secret.charAt(i);
+            if(ht.containsKey(curr) && ht.get(curr)>0) {
+                cows++;
+                System.out.print(curr + " ");
+                ht.put(curr,ht.get(curr)-1);
+            }
+        }
+
+        for(int i = 0; i<len; i++) {
+            if(secret.charAt(i) == guess.charAt(i)){
+                bulls++;
+                cows--;
+            }
+        }
+
+        StringBuilder str = new StringBuilder();
+        str.append(String.valueOf(bulls));
+        str.append("A");
+        str.append(String.valueOf(cows));
+        str.append("B");
+        return str.toString();
+    }
+}
