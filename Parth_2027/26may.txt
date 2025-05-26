@@ -1,0 +1,24 @@
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int province=0;
+        int n=isConnected.length;
+        int[]visited=new int[n];
+        for(int i=0;i<n;i++){
+            if(visited[i]!=1){
+                province++;
+                dfs(i,isConnected,visited);
+            }
+        }
+        
+        return province;
+    }
+    private void dfs(int node,int[][] isConnected,int[]visited){
+        visited[node]=1;
+        for(int j=0;j<isConnected.length;j++){
+            //if direct connection and j not visited
+            if(isConnected[node][j]==1 && visited[j]==0){
+                dfs(j,isConnected,visited);
+            }
+        }
+    }
+}
