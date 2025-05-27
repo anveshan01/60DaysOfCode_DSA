@@ -1,0 +1,28 @@
+class Solution {
+    public int differenceOfSums(int n, int m) {
+        int num1 = 0, num2 = 0;
+        for(int i = 0; i<=n; i++){
+            if(i%m!=0){num1+=i;}
+            else{num2+=i;}
+        }
+        return num1-num2;
+    }
+}
+
+class Solution {
+    public int differenceOfSums(int n, int m) {
+        if(m==1){
+            return 0 - (n*(n+1)/2);
+        }
+        int num1 = n*(n+1)/2, num2 = 0;
+        int i = m, idx=2;
+        while(i<=n){
+            System.out.print(i+" ");
+            num2+=i;
+            num1-=i;
+            i = m*(idx++);
+        }
+
+        return num1-num2;
+    }
+}
