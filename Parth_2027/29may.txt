@@ -1,0 +1,55 @@
+class Pair {
+    int i;
+    int j;
+    int d;
+
+    Pair(int i, int j, int d) {
+        this.i = i;
+        this.j = j;
+        this.d = d;
+    }
+}
+
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+        int[][] visited = new int[n][m];
+        int[][] dist = new int[n][m];
+        Queue<Pair> q = new LinkedList<>();
+
+        // Add all 0-cells to the queue with distance 0
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (mat[i][j] == 0) {
+                    q.offer(new Pair(i, j, 0));
+                    visited[i][j] = 1;
+                }
+            }
+        }
+
+        // Directions: up, right, down, left
+        int[] drow = { -1, 0, 1, 0 };
+        int[] dcol = { 0, 1, 0, -1 };
+
+        // BFS
+        while (!q.isEmpty()) {
+            Pair p = q.poll();
+            int r = p.i;
+            int c = p.j;
+            int dis = p.d;
+            dist[r][c] = dis;
+
+            for (int i = 0; i < 4; i++) {
+                int row = r + drow[i];
+                int col = c + dcol[i];
+                if (row >= 0 && col >= 0 && row < n && col < m && visited[row][col] != 1) {
+                    visited[row][col] = 1;
+                    q.offer(new Pair(row, col, dis + 1));
+                }
+            }
+        }
+
+        return dist;
+    }
+}
