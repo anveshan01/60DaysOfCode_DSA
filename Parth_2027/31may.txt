@@ -1,0 +1,43 @@
+class Solution {
+    int n;
+    int m;
+    private void dfs(int[][]grid,int x,int y){
+        if(x<0 || y<0 || y>=m || x>=n || grid[x][y]==0)return;//out of bounds
+        //boundary element is 1 and is in bounds
+        grid[x][y]=0;//change the element that cannot be surrounded to 0
+        dfs(grid,x-1,y);
+        
+        dfs(grid,x,y+1);
+
+        dfs(grid,x+1,y);
+
+        dfs(grid,x,y-1);
+    }
+    public int numEnclaves(int[][] grid) {
+        n=grid.length;
+        m=grid[0].length;
+        for(int i=0;i<n;i++){
+            if(grid[i][0]==1){
+                dfs(grid,i,0);
+            }
+            if(grid[i][m-1]==1){
+                dfs(grid,i,m-1);
+            }
+        }
+        for(int j=0;j<m;j++){
+            if(grid[0][j]==1){
+                dfs(grid,0,j);
+            }
+            if(grid[n-1][j]==1){
+                dfs(grid,n-1,j);
+            }
+        }
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                cnt+=grid[i][j];
+            }
+        }
+        return cnt;
+    }
+}
