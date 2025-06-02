@@ -1,0 +1,36 @@
+
+//TLE SOLUTION 126 LEETCODE
+class Solution {
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        Queue<List<String>>q=new LinkedList<>();
+        List<List<String>>ans=new ArrayList<>();
+        Set<String>set=new HashSet<>();
+        for(String s:wordList){
+            set.add(s);
+        }
+        if(set.contains(endWord)==false)return ans;
+        q.offer(new ArrayList<>(Arrays.asList(beginWord)));
+        while(!q.isEmpty()){
+            List<String>list;
+            list=q.poll();
+            String word=list.get(list.size()-1);//current last word
+            if(word.equals(endWord)){
+                ans.add(list);
+            }
+            for(int i=0;i<word.length();i++){
+                for(char ch='a';ch<='z';ch++){
+                char[]charArray=word.toCharArray();
+                charArray[i]=ch;
+                String s=new String(charArray);
+                    if(set.contains(s)){
+                        list.add(s);
+                        q.offer(list);
+                    }
+                }
+            }
+        }
+        return ans;
+
+    }
+}
+// OPTIMAL SOLUTION
