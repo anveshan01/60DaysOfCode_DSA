@@ -1,0 +1,20 @@
+class Solution {
+    public int trailingZeroes(int n) {
+        //int two = 0, 
+        int five = 0;
+        while(n>0){
+            int curr = n;
+            // while(curr%2==0){
+            //     two++;
+            //     curr = curr/2;
+            // }
+            while(curr%5==0){
+                five++;
+                curr = curr/5;
+            }
+            n-=1;
+        }
+        //return Math.min(two,five);
+        return five;
+    }
+}
