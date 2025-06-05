@@ -1,0 +1,17 @@
+class Solution {
+    public double log3(int n){
+        return (Math.log10(n) / Math.log10(3));
+    } 
+    
+    public boolean isPowerOfThree(int n) {
+        if(n==1){
+            return true;
+        }
+        if(n==0){
+            return false;
+        }
+        double log = log3(n);
+        System.out.println(log);
+        return log == Math.floor(log);
+    }
+}
