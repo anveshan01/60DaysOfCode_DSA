@@ -1,0 +1,31 @@
+class Solution {
+    public int maxDifference(String s) {
+        char[] arr = s.toCharArray();
+        Arrays.sort(arr);
+        s = new String(arr);
+        System.out.println("s:" + s);
+        int minEven = Integer.MAX_VALUE, maxOdd = Integer.MIN_VALUE;
+        int curr = 1, len = s.length();
+
+        for(int i = 1; i<len; i++){
+            if(s.charAt(i) != s.charAt(i-1)){
+                if(curr%2==0){
+                    minEven = Math.min(curr,minEven);
+                }else{
+                    maxOdd = Math.max(curr,maxOdd);
+                }
+                curr = 0;
+            }
+            curr++;
+        }
+
+        if(curr%2==0){
+            minEven = Math.min(curr,minEven);
+        }else{
+            maxOdd = Math.max(curr,maxOdd);
+        }
+
+        System.out.println("e:" + minEven + " o:" + maxOdd);
+        return (maxOdd-minEven);
+    }
+}
