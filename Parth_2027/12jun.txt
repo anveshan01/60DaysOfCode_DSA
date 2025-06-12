@@ -1,0 +1,56 @@
+class Pair implements Comparable<Pair> {
+    int dt;
+    int r;
+    int c;
+
+    Pair(int dt, int r, int c) {
+        this.r = r;
+        this.dt = dt;
+        this.c = c;
+    }
+
+    public int compareTo(Pair other) {
+        return this.dt - other.dt;//min heap based on efforts
+    }
+}
+
+class Solution {
+    public int minimumEffortPath(int[][] heights) {
+        int n = heights.length;
+        int m = heights[0].length;
+
+        int[][] visited = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                visited[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.offer(new Pair(0, 0, 0));
+        visited[0][0] = 0;
+        int[][] d = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
+
+        while (!pq.isEmpty()) {
+            Pair p = pq.poll();
+            int dis = p.dt;
+            int r = p.r;
+            int c = p.c;
+            for (int i = 0; i < 4; i++) {
+                int drow = r + d[i][0];
+                int dcol = c + d[i][1];
+                if (drow >= 0 && dcol >= 0 && drow < n && dcol < m) {
+                    int diff = Math.abs(heights[drow][dcol] - heights[r][c]);
+                    int dist = Math.max(dis, diff);
+                    if (dist < visited[drow][dcol]) {
+                        visited[drow][dcol] = dist;
+                        pq.offer(new Pair(dist, drow, dcol));
+                    }
+                }
+
+            }
+
+        }
+        return visited[n - 1][m - 1];
+    }
+
+}
