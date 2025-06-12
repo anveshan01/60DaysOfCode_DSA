@@ -1,0 +1,10 @@
+class Solution {
+    public int maxAdjacentDistance(int[] nums) {
+        int len = nums.length;
+        int max = Math.abs(nums[len-1]-nums[0]);
+        for(int i = 1; i<len; i++){
+            max = Math.max(max, Math.abs(nums[i]-nums[i-1]));
+        }
+        return max;
+    }
+}
