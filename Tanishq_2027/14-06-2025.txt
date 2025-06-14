@@ -1,0 +1,55 @@
+import java.util.*;
+class Solution {
+    //public HashSet<Integer> visited = new HashSet<>();
+    public boolean pairs(int[] nums, int p, int mid){
+        int count = 0;
+        int len = nums.length, i = 0;
+        while(i < len-1){
+            if(nums[i+1] - nums[i] <= mid){
+                count++;
+                i+=2;
+            }
+            else{
+                i++;
+            }
+        }
+        return count >= p; // i.e. can we make atleast p pairs for this diff(mid)
+    }
+    public int minimizeMax(int[] nums, int p) {
+        Arrays.sort(nums);
+
+        int len = nums.length;
+        int low = 0;
+        int high = nums[len-1]-nums[0]; // max possible diff for this arr
+
+        while(low<high){
+            int mid = low + (high-low)/2;
+            if(pairs(nums, p, mid)){
+                high = mid;
+            }
+            else{
+                low = mid+1;
+            }
+        }
+        
+        return low;
+    }
+}
+
+class Solution {
+    public int minMaxDifference(int num) {
+        String max = Integer.toString(num);
+        String min = max;
+        int i = 0, len = max.length();
+        min = min.replace(min.charAt(0),'0');
+        System.out.println(min);
+        while(i<len && max.charAt(i)=='9'){
+            i++;
+        }
+        if(i<len){
+            max = max.replace(max.charAt(i),'9');
+        }
+        System.out.println(max);
+        return Integer.parseInt(max) - Integer.parseInt(min);
+    }
+}
