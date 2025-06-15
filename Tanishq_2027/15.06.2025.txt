@@ -1,0 +1,27 @@
+class Solution {
+    public int maxDiff(int num) {
+        String max = Integer.toString(num);
+        String min = max;
+        int i = 0, len = max.length();
+        while(i<len && max.charAt(i) == '9'){
+            i++;
+        }
+        if(i<len){
+            max = max.replace(max.charAt(i),'9');
+        }
+        i = 0;
+        if(min.charAt(0) != '1'){
+            min = min.replace(min.charAt(0), '1');
+        }
+        else{
+            while(i<len && (min.charAt(i) == '1' || min.charAt(i) == '0')){
+                i++;
+            }
+            if(i<len){
+                min = min.replace(min.charAt(i),'0');
+            }
+        }
+        //System.out.println(max + "  " + min);
+        return Integer.parseInt(max) - Integer.parseInt(min);
+    }
+}
