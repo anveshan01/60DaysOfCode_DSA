@@ -1,0 +1,31 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        int profit = 0, min = prices[0];
+        int len = prices.length;
+        for(int i = 0; i<len; i++){
+            if(prices[i] > min){
+                profit = Math.max(profit,prices[i]-min);
+            }
+            else{
+                min = prices[i];
+            }
+        }
+        return profit;
+    }
+}
+
+class Solution {
+    public int maximumDifference(int[] nums) {
+        int max = -1, min = nums[0];
+        int len = nums.length;
+        for(int i = 0; i<len; i++){
+            if(nums[i]>min){
+                max = Math.max(max, nums[i]-min);
+            }
+            else{
+                min = nums[i];
+            }
+        }
+        return max;
+    }
+}
