@@ -1,0 +1,40 @@
+class Solution {
+    public int[][] divideArray(int[] nums, int k) {
+        int len = nums.length, idx = 0;
+        int[][] res = new int[len/3][3];
+        Arrays.sort(nums);
+        for(int i = 0; i<len; i+=3){
+            if((nums[i+2] - nums[i+1] > k) || (nums[i+1] - nums[i] > k) || (nums[i+2] - nums[i] > k)){
+                return new int[][] {};
+            }
+            res[idx][0] = nums[i];
+            res[idx][1] = nums[i+1];
+            res[idx][2] = nums[i+2];
+            idx++;
+        }
+        return res;
+    }
+}
+
+import java.util.*;
+class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        List<String> list = new ArrayList<>();
+        Hashtable<String,Integer> ht = new Hashtable<>();
+        int len = s.length();
+        int l = 0, r = 9;
+        while(r<len){
+            String dna = s.substring(l,r+1);
+            if(!ht.containsKey(dna)){
+               ht.put(dna,0);
+            }
+            ht.put(dna, ht.get(dna)+1);
+            if(ht.get(dna) > 1 && !list.contains(dna)){
+                list.add(dna);
+            }
+            l++;
+            r++;
+        }
+        return list;
+    }
+}
