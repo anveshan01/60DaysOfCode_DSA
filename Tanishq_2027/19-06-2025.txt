@@ -1,0 +1,60 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int ele = 1;
+        int[][] arr = new int[n][n];
+        int left = 0, right = n-1, up = 0, down = n-1;
+        while(left<=right && up<=down){
+            //move right
+            for(int i = left; i<=right; i++){
+                arr[up][i] = ele++;
+            }
+            up++;
+            //move down
+            for(int i = up; i<=down; i++){
+                arr[i][right] = ele++;
+            }
+            right--;
+            //move left
+            if(up<=down){
+                for(int i = right; i>=left; i--){
+                    arr[down][i] = ele++;
+                }
+                down--;
+            }
+            //move up
+            if(left<=right){
+                for(int i = down; i>=up; i--){
+                    arr[i][left] = ele++;
+                }
+                left++;
+            }
+        }
+        return arr;
+    }
+}
+
+import java.util.*;
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        int len = s.length();
+        if(len == 1){return true;}
+        Hashtable<Character,Character> ht = new Hashtable<>();
+        ht.put(s.charAt(0),t.charAt(0));
+        for(int i = 1; i<len; i++){
+            char sch = s.charAt(i);
+            char tch = t.charAt(i);
+            if(ht.containsKey(sch)){
+                if(ht.get(sch) != tch){
+                    return false;
+                }
+            }
+            else{
+                if(ht.containsValue(tch)){
+                    return false;
+                }
+                ht.put(sch, tch);
+            }
+        }
+        return true;
+    }
+}
